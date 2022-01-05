@@ -3,19 +3,28 @@ class WeatherData {
   int timezone;
   Main main;
   Wind wind;
+  // List<Weather> weather;
 
-  WeatherData(
-      {required this.name,
-      required this.timezone,
-      required this.main,
-      required this.wind});
+  WeatherData({
+    required this.name,
+    required this.timezone,
+    required this.main,
+    required this.wind,
+    // required this.weather
+  });
 
   factory WeatherData.fromJson(Map<String, dynamic> jsData) {
+    // var list = jsData['weather'] as List;
+    // print(list.runtimeType);
+    // List<Weather> wList = list.map((i) => Weather.fromJson(i)).toList();
+
     return WeatherData(
-        name: jsData['name'],
-        timezone: jsData['timezone'],
-        main: Main.fromJson(jsData['main']),
-        wind: Wind.fromJson(jsData['wind']));
+      name: jsData['name'],
+      timezone: jsData['timezone'],
+      main: Main.fromJson(jsData['main']),
+      wind: Wind.fromJson(jsData['wind']),
+      // weather: wList
+    );
   }
 }
 
@@ -42,17 +51,13 @@ class Wind {
   }
 }
 
+// class Weather {
+//   String main;
+//   String icon;
+//   Weather({required this.main, required this.icon});
 
-// {
-// "weather":[{"main":"Haze","description":"haze","icon":"50n"}],
-// 
-// "main":{"temp":293.05,"feels_like":291.93,"pressure":1017,"humidity":32},
-//
-// "wind":{"speed":1.54,"deg":10},
-// "clouds":{"all":0},
-//
-// "sys":{"type":1,"id":7576,"country":"PK","sunrise":1638496865,"sunset":1638535331},
-// "timezone":18000,
-// 
-// "name":"Karachi",
-//}
+//   factory Weather.fromJson(Map<String, dynamic> json) {
+//     return Weather(main: json['main'], icon: json['icon']);
+//   }
+// }
+

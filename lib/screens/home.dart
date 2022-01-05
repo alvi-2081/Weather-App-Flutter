@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:google_fonts/google_fonts.dart';
 import 'package:weather_app/services/home_service.dart';
 
@@ -26,6 +25,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         extendBodyBehindAppBar: true,
         appBar: AppBar(
           elevation: 0,
@@ -33,10 +33,22 @@ class _HomeState extends State<Home> {
           leading:
               IconButton(onPressed: () {}, icon: Icon(Icons.more_vert_sharp)),
           title: TextField(
-              controller: txt,
-              onChanged: (value) {
-                city_name = value;
-              }),
+            controller: txt,
+            onChanged: (value) {
+              city_name = value;
+            },
+            style: TextStyle(color: Colors.white),
+            cursorColor: Colors.white24,
+            decoration: InputDecoration(
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.white24),
+              ),
+              hintText: "  Enter City",
+              hintStyle: TextStyle(
+                color: Colors.white24,
+              ),
+            ),
+          ),
           actions: [
             IconButton(
                 onPressed: () {
@@ -51,7 +63,7 @@ class _HomeState extends State<Home> {
             builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.data == null) {
                 return Center(
-                  child: Text("NO data"),
+                  child: CircularProgressIndicator(),
                 );
               } else {
                 return Container(
@@ -75,7 +87,7 @@ class _HomeState extends State<Home> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
-                              height: 70,
+                              height: 100,
                             ),
                             Text(snapshot.data.name,
                                 style: GoogleFonts.lato(
@@ -95,11 +107,10 @@ class _HomeState extends State<Home> {
                             SizedBox(
                               height: 70,
                             ),
-                            Text(
-                                "${(snapshot.data.main.temp - 32) * 5 / 9}\u2103",
+                            Text("${snapshot.data.main.temp.toInt()}\u2103",
                                 style: GoogleFonts.lato(
-                                    fontSize: 55,
-                                    fontWeight: FontWeight.w300,
+                                    fontSize: 85,
+                                    // fontWeight: FontWeight.w300,
                                     color: Colors.white)),
                             Row(
                               children: [
@@ -108,6 +119,7 @@ class _HomeState extends State<Home> {
                                         fontSize: 25,
                                         fontWeight: FontWeight.w500,
                                         color: Colors.white)),
+                                // Image.network(snapshot.data.weather.icon),
                               ],
                             )
                           ],
@@ -115,37 +127,57 @@ class _HomeState extends State<Home> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Column(
-                              children: [
-                                Text("Wind Speed",
-                                    style: GoogleFonts.lato(
-                                        fontSize: 18, color: Colors.white)),
-                                Text("${snapshot.data.wind.speed}",
-                                    style: GoogleFonts.lato(
-                                        fontSize: 13, color: Colors.white))
-                              ],
+                            Container(
+                              height: 100,
+                              // decoration: BoxDecoration(
+                              //     border: Border.only(color: Colors.white30)),
+                              child: Column(
+                                children: [
+                                  Text("Wind Speed",
+                                      style: GoogleFonts.lato(
+                                          fontSize: 20, color: Colors.white)),
+                                  Text("${snapshot.data.wind.speed}",
+                                      style: GoogleFonts.lato(
+                                          fontSize: 15, color: Colors.white)),
+                                  Text("Kmh",
+                                      style: GoogleFonts.lato(
+                                          fontSize: 15, color: Colors.white)),
+                                ],
+                              ),
                             ),
-                            Column(
-                              children: [
-                                Text("Pressure",
-                                    style: GoogleFonts.lato(
-                                        fontSize: 18,
-                                        // fontWeight: FontWeight.bold,
-                                        color: Colors.white)),
-                                Text("${snapshot.data.main.pressure}",
-                                    style: GoogleFonts.lato(
-                                        fontSize: 13, color: Colors.white))
-                              ],
+                            Container(
+                              height: 100,
+                              child: Column(
+                                children: [
+                                  Text("Pressure",
+                                      style: GoogleFonts.lato(
+                                          fontSize: 20,
+                                          // fontWeight: FontWeight.bold,
+                                          color: Colors.white)),
+                                  Text("${snapshot.data.main.pressure}",
+                                      style: GoogleFonts.lato(
+                                          fontSize: 15, color: Colors.white)),
+                                  Text("mb",
+                                      style: GoogleFonts.lato(
+                                          fontSize: 15, color: Colors.white)),
+                                ],
+                              ),
                             ),
-                            Column(
-                              children: [
-                                Text("Humidity",
-                                    style: GoogleFonts.lato(
-                                        fontSize: 18, color: Colors.white)),
-                                Text("${snapshot.data.main.humidity}",
-                                    style: GoogleFonts.lato(
-                                        fontSize: 13, color: Colors.white))
-                              ],
+                            Container(
+                              height: 100,
+                              child: Column(
+                                children: [
+                                  Text("Humidity",
+                                      style: GoogleFonts.lato(
+                                          fontSize: 20, color: Colors.white)),
+                                  Text("${snapshot.data.main.humidity}",
+                                      style: GoogleFonts.lato(
+                                          fontSize: 15, color: Colors.white)),
+                                  Text("%",
+                                      style: GoogleFonts.lato(
+                                          fontSize: 15, color: Colors.white)),
+                                ],
+                              ),
                             ),
                           ],
                         )

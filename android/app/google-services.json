@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "828907394696",
+    "project_id": "flutter-firebase-app-ad202",
+    "storage_bucket": "flutter-firebase-app-ad202.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:828907394696:android:3a964443411f5b9c71713d",
+        "android_client_info": {
+          "package_name": "com.example.weather_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "828907394696-g7ajsnpamf2li3offjcg8n68acsk35n3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIla_Oym5Ute6JX07Vq_o6S8sxuMkXFCM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "828907394696-g7ajsnpamf2li3offjcg8n68acsk35n3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
