@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:weather_app/services/home_service.dart';
 
-var city = "karachi";
+var city = "";
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -14,12 +14,18 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   TextEditingController txt = TextEditingController();
 
-  var city_name = "";
+  late String city_name;
 
   citytext() {
     setState(() {
       city = city_name;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    city = "Karachi";
   }
 
   @override
@@ -69,7 +75,8 @@ class _HomeState extends State<Home> {
                 return Container(
                     child: Stack(children: [
                   Image.asset(
-                    "assets/img1.jpg",
+                    // "assets/img1.jpg",
+                    image(snapshot.data.weather[0].main),
                     fit: BoxFit.cover,
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height,
@@ -89,16 +96,32 @@ class _HomeState extends State<Home> {
                             SizedBox(
                               height: 100,
                             ),
-                            Text(snapshot.data.name,
-                                style: GoogleFonts.lato(
-                                    fontSize: 35,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white)),
-                            Text("${snapshot.data.timezone}",
-                                style: GoogleFonts.lato(
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white))
+                            //
+                            //                   Name of City
+                            //
+                            Padding(
+                              padding: const EdgeInsets.only(left: 7.0),
+                              child: Text(snapshot.data.name,
+                                  style: GoogleFonts.lato(
+                                      fontSize: 60,
+                                      // fontWeight: FontWeight.bold,
+                                      color: Colors.white)),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            //
+                            //                    Description
+                            //
+                            Padding(
+                              padding: const EdgeInsets.only(left: 9),
+                              child: Text(
+                                  "Weather: ${snapshot.data.weather[0].description}",
+                                  style: GoogleFonts.lato(
+                                      fontSize: 23,
+                                      // fontWeight: FontWeight.bold,
+                                      color: Colors.white)),
+                            )
                           ],
                         ),
                         Column(
@@ -107,26 +130,58 @@ class _HomeState extends State<Home> {
                             SizedBox(
                               height: 70,
                             ),
-                            Text("${snapshot.data.main.temp.toInt()}\u2103",
-                                style: GoogleFonts.lato(
-                                    fontSize: 85,
-                                    // fontWeight: FontWeight.w300,
-                                    color: Colors.white)),
+                            //
+                            //                        Main Temperature
+                            //
                             Row(
                               children: [
-                                Text("Night",
+                                Text("${snapshot.data.main.temp.toInt()}\u2103",
+                                    style: GoogleFonts.lato(
+                                        fontSize: 85,
+                                        // fontWeight: FontWeight.w300,
+                                        color: Colors.white)),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                //
+                                //                    Weather Type
+                                //
+                                Text("${snapshot.data.weather[0].main}",
                                     style: GoogleFonts.lato(
                                         fontSize: 25,
                                         fontWeight: FontWeight.w500,
                                         color: Colors.white)),
-                                // Image.network(snapshot.data.weather.icon),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                //
+                                //                    Cloud Image
+                                //
+                                Image.network(
+                                    "http://openweathermap.org/img/w/${snapshot.data.weather[0].icon}.png"),
                               ],
-                            )
+                            ),
+                            // Padding(
+                            //   padding: const EdgeInsets.only(left: 9.0),
+                            //   child: Text(
+                            //       "Feesls Like ${snapshot.data.main.feelsLike.toInt()}\u2103",
+                            //       style: GoogleFonts.lato(
+                            //           fontSize: 20,
+                            //           fontWeight: FontWeight.w500,
+                            //           color: Colors.white)),
+                            // ),
                           ],
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
+                            //
+                            //                Wind Speed
+                            //
                             Container(
                               height: 100,
                               // decoration: BoxDecoration(
@@ -145,6 +200,9 @@ class _HomeState extends State<Home> {
                                 ],
                               ),
                             ),
+                            //
+                            //                    Pressure
+                            //
                             Container(
                               height: 100,
                               child: Column(
@@ -163,6 +221,9 @@ class _HomeState extends State<Home> {
                                 ],
                               ),
                             ),
+                            //
+                            //                    Humidity
+                            //
                             Container(
                               height: 100,
                               child: Column(
@@ -187,5 +248,21 @@ class _HomeState extends State<Home> {
                 ]));
               }
             }));
+  }
+}
+
+image(w_type) {
+  if (w_type == "Haze") {
+    return "assets/haze.jpg";
+  } else if (w_type == "Clear") {
+    return "assets/clear.jpg";
+  } else if (w_type == "Clouds") {
+    return "assets/cloudy.jpg";
+  } else if (w_type == "Mist") {
+    return "assets/mist.jpg";
+  } else if (w_type == "Sunny") {
+    return "assets/sunny.jpg";
+  } else {
+    return "assets/img1.jpg";
   }
 }
